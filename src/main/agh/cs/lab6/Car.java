@@ -94,9 +94,9 @@ public class Car {
 
 
             List<HayStack> myHayStacks = new ArrayList<HayStack>();
-            Position positionOfMyStack = new Position(-4, -4);
+            Position positionOfMyStack = new Position(7, -4);
             myHayStacks.add(new HayStack(positionOfMyStack));
-            positionOfMyStack = new Position(7, 7);
+            positionOfMyStack = new Position(-4, 7);
             myHayStacks.add(new HayStack(positionOfMyStack));
             positionOfMyStack = new Position(3, 6);
             myHayStacks.add(new HayStack(positionOfMyStack));

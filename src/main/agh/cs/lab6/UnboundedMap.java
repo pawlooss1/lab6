@@ -1,5 +1,7 @@
 package agh.cs.lab6;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -13,21 +15,18 @@ public class UnboundedMap extends AbstractWorldMap{
     }
     public String toString(){
         MapVisualizer drawer = new MapVisualizer(this);
-        Position lowerLeft = cars.get(0).getPosition();
-        Position upperRight = cars.get(0).getPosition();
-        for(Car car: cars){
-            if(car.getPosition().smaller(lowerLeft))
-                lowerLeft = car.getPosition();
-            if(car.getPosition().larger(upperRight))
-                upperRight = car.getPosition();
+        List<Car> carList = new ArrayList<>(cars.values());
+        Position bottomLeftCorner = carList.get(0).getPosition();
+        Position topRightCorner = carList.get(0).getPosition();
+        for(Car car: carList){
+            bottomLeftCorner = car.getPosition().lowerLeft(bottomLeftCorner);
+            topRightCorner = car.getPosition().upperRight(topRightCorner);
         }
         for(HayStack stack: hayStacks){
-            if(stack.getPosition().smaller(lowerLeft))
-                lowerLeft = stack.getPosition();
-            if(stack.getPosition().larger(upperRight))
-                upperRight = stack.getPosition();
+            bottomLeftCorner = stack.getPosition().lowerLeft(bottomLeftCorner);
+            topRightCorner = stack.getPosition().upperRight(topRightCorner);
         }
-        return drawer.draw(lowerLeft, upperRight);
+        return drawer.draw(bottomLeftCorner, topRightCorner);
     }
     public boolean canMoveTo(Position position){
         return !this.isOccupied(position);

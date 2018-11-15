@@ -17,21 +17,19 @@ abstract public class AbstractWorldMap implements IWorldMap{
     public void run(MoveDirection[] directions){
         if (cars.size() == 0)
             return;
+        List<Car> carList = new ArrayList<>(cars.values());
         for(int i = 0; i<directions.length; i++){
-            Car carToMove = cars.get(i%cars.size());
+            Car carToMove = carList.get(i%carList.size());
             Position oldPosition = carToMove.getPosition();
             carToMove.move(directions[i], this);
-            i++;
+            cars.remove(oldPosition);
+            cars.put(carToMove.getPosition(), carToMove);
         }
     }
     public boolean isOccupied(Position position){
         return this.objectAt(position) != null;
     }
     public Object objectAt(Position position){
-        for(Car car: cars){
-            if(car.getPosition().equals(position))
-                return car;
-        }
-        return null;
+        return cars.getOrDefault(position, null);
     }
 }
